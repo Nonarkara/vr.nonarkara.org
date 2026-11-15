@@ -1,0 +1,88 @@
+"""Rebuild the public landing page from the snapshot. Single source of truth.
+
+Reads snapshot.json, writes index.html. No regex patching: the template is
+here, the numbers come from the record.
+"""
+import json
+
+SNAP = "/tmp/u69w/vrdeploy/snapshot.json"
+OUT = "/tmp/u69w/vrdeploy/index.html"
+
+s = json.load(open(SNAP))
+e, l = s["u"]["eden"], s["u"]["lagoon"]
+eden = "EDEN day %s (Y%s), pop %s" % (e["day"], e["day"] // 360,
+                                      len(e.get("people") or []))
+lagoon = "LAGOON day %s (Y%s), pop %s" % (l["day"], l["day"] // 360,
+                                          len(l.get("people") or []))
+
+HTML = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Universe 69 — the West World</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Two sealed pixel universes — Calhoun's pen and the first-sapiens lagoon — observed, never helped. Walk the lagoon in VR, or watch both worlds on one map.">
+<meta property="og:title" content="Universe 69 — the West World">
+<meta property="og:description" content="Two sealed pixel universes, observed, never helped. A snapshot of the record.">
+<meta property="og:type" content="website">
+<style>
+  :root{--surface:#14130f;--ink:#ede6d6;--muted:#a39b88;--accent:#e4b456;--lagoon:#a6c98a;--eden:#8ec5d6;--line:#37332a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--surface);color:var(--ink);
+       font:16px/1.65 Georgia,'Times New Roman',serif}
+  main{max-width:640px;margin:0 auto;padding:64px 22px 96px}
+  h1{font:500 13px/1.4 Jost,system-ui,sans-serif;letter-spacing:.32em;
+     text-transform:uppercase;color:var(--accent);margin:0 0 18px}
+  h2{font-size:26px;font-weight:500;margin:0 0 10px}
+  p{color:var(--ink)}
+  .muted{color:var(--muted);font-size:14px}
+  a{color:var(--lagoon);text-decoration:none;border-bottom:1px solid transparent}
+  a:hover{border-bottom-color:var(--lagoon)}
+  .card{display:block;border:1px solid var(--line);border-radius:10px;
+        padding:18px 20px;margin:14px 0;background:#1c1a15}
+  .card b{color:var(--accent);font-weight:500}
+  .tag{font:11px Jost,system-ui,sans-serif;letter-spacing:.18em;
+       text-transform:uppercase;color:var(--muted)}
+  .eden{color:var(--eden)} .lagoon{color:var(--lagoon)}
+  footer{margin-top:42px;font-size:13px;color:var(--muted)}
+  code{font-size:12px;background:#1c1a15;padding:1px 5px;border-radius:4px}
+</style>
+</head>
+<body>
+<main>
+  <h1>Universe 69</h1>
+  <h2>the West World</h2>
+  <p class="muted">Two sealed pixel universes — Calhoun's pen and the first
+  sapiens lagoon — observed, never helped. This page is a <b>snapshot of the
+  record</b>: the worlds keep living on the instrument; here they stand at the
+  moment the snapshot was taken.</p>
+
+  <a class="card" href="vr.html">
+    <span class="tag">West World · VR</span><br>
+    <b>Walk the lagoon</b> — inside the dusk, beside the people who live there.
+    WebXR where a headset answers; drag to look, WASD to walk.
+  </a>
+  <a class="card" href="2d.html">
+    <span class="tag">The terrarium · 2D</span><br>
+    <b>Both worlds on one map</b> — the pen and the lagoon, the camps with
+    their names, the book of the record beside them.
+  </a>
+
+  <p class="muted">As of the snapshot: <span class="eden">%s</span> ·
+  <span class="lagoon">%s</span>.</p>
+  <p class="muted">The record counter keeps counting — that is how you know
+  this page is a snapshot and not the live wire. The live instrument runs on
+  the Observers' own machine; nothing here moves a trajectory.</p>
+
+  <p class="muted">The record behind the worlds:
+  <a href="https://github.com/Nonarkara/universe-69/blob/main/STUDY.md">study</a> ·
+  <a href="https://github.com/Nonarkara/universe-69/blob/main/DESIGN.md">design</a> ·
+  <a href="https://github.com/Nonarkara/universe-69">engine</a></p>
+  <footer>The Observers only watch.</footer>
+</main>
+</body>
+</html>
+""" % (eden, lagoon)
+
+open(OUT, "w").write(HTML)
+print("landing rebuilt |", eden, "|", lagoon)

@@ -4,8 +4,12 @@
 <meta charset="utf-8">
 <title>Universe 69 — the West World</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Two sealed pixel universes — Calhoun's pen and the first-sapiens lagoon — observed, never helped. Walk the lagoon in VR, or watch both worlds on one map.">
+<meta property="og:title" content="Universe 69 — the West World">
+<meta property="og:description" content="Two sealed pixel universes, observed, never helped. A snapshot of the record.">
+<meta property="og:type" content="website">
 <style>
-  :root{--surface:#14130f;--ink:#ede6d6;--muted:#a39b88;--accent:#e4b456;--lagoon:#a6c98a;--eden:#8ec5d6}
+  :root{--surface:#14130f;--ink:#ede6d6;--muted:#a39b88;--accent:#e4b456;--lagoon:#a6c98a;--eden:#8ec5d6;--line:#37332a}
   *{box-sizing:border-box}
   body{margin:0;background:var(--surface);color:var(--ink);
        font:16px/1.65 Georgia,'Times New Roman',serif}
@@ -17,13 +21,14 @@
   .muted{color:var(--muted);font-size:14px}
   a{color:var(--lagoon);text-decoration:none;border-bottom:1px solid transparent}
   a:hover{border-bottom-color:var(--lagoon)}
-  .card{display:block;border:1px solid #37332a;border-radius:10px;
+  .card{display:block;border:1px solid var(--line);border-radius:10px;
         padding:18px 20px;margin:14px 0;background:#1c1a15}
   .card b{color:var(--accent);font-weight:500}
   .tag{font:11px Jost,system-ui,sans-serif;letter-spacing:.18em;
        text-transform:uppercase;color:var(--muted)}
   .eden{color:var(--eden)} .lagoon{color:var(--lagoon)}
   footer{margin-top:42px;font-size:13px;color:var(--muted)}
+  code{font-size:12px;background:#1c1a15;padding:1px 5px;border-radius:4px}
 </style>
 </head>
 <body>
@@ -46,14 +51,17 @@
     their names, the book of the record beside them.
   </a>
 
-  <p class="muted">As of the snapshot: <span class="eden">EDEN day 209716 (Y582), pop 33</span> · <span class="lagoon">LAGOON day 209716 (Y582), pop 18</span>.
-  The record counter keeps counting — that is how you know
+  <p class="muted">As of the snapshot: <span class="eden">EDEN day 210529 (Y584), pop 36</span> ·
+  <span class="lagoon">LAGOON day 210529 (Y584), pop 19</span>.</p>
+  <p class="muted">The record counter keeps counting — that is how you know
   this page is a snapshot and not the live wire. The live instrument runs on
   the Observers' own machine; nothing here moves a trajectory.</p>
-  <footer>The Observers only watch. · <a href="README.md">README</a></footer>
-<p class="muted">The record counter keeps counting — that is how you know The record counter keeps counting — that is how you know
-  this page is a snapshot and not the live wire. The live instrument runs on the Observers' own machine; nothing here moves a trajectory.</p>
-  <footer>The Observers only watch. · <a href="README.md">README</a></footer>
+
+  <p class="muted">The record behind the worlds:
+  <a href="https://github.com/Nonarkara/universe-69/blob/main/STUDY.md">study</a> ·
+  <a href="https://github.com/Nonarkara/universe-69/blob/main/DESIGN.md">design</a> ·
+  <a href="https://github.com/Nonarkara/universe-69">engine</a></p>
+  <footer>The Observers only watch.</footer>
 </main>
 </body>
 </html>
