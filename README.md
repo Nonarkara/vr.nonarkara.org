@@ -11,6 +11,7 @@ touching the instrument.
 - `vr.html` — the West World. WebXR where a headset answers; drag to
   look, WASD to walk, `r` inspect, `t` table, `1`/`2` the two worlds.
 - `2d.html` — the 2D terrarium viewer with the book of the record.
+  (`web/index.html`, shipped under its deployed name.)
 - `snapshot.json` — the record at the moment of the snapshot. Both
   viewers read it through `config.js` (`window.SNAPSHOT_URL`), the same
   hook the live mirror uses; the pages are byte-identical copies of the
@@ -28,7 +29,18 @@ touching the instrument.
 
 ## Refresh the snapshot (owner)
 
-    curl -s http://127.0.0.1:6969/state > snapshot.json
+A snapshot without the `/world` payload renders the lagoon black
+(fixed 2026-11-15) — so merge state and world, and headless-check the
+pages on a scratch static server before pushing:
+
+    curl -s http://127.0.0.1:6969/state > /tmp/state.json
+    curl -s http://127.0.0.1:6969/world > /tmp/world.json
+    python3 - <<'PY'
+    import json
+    s = json.load(open('/tmp/state.json'))
+    s['world'] = json.load(open('/tmp/world.json'))
+    open('snapshot.json', 'w').write(json.dumps(s, separators=(',', ':')))
+    PY
     git add snapshot.json && git commit -m "snapshot: the record at <date>" && git push
 
 ## DNS (owner)
@@ -36,4 +48,7 @@ touching the instrument.
 Point `vr.nonarkara.org` at GitHub Pages — A records
 185.199.108.153 / 185.199.109.153 / 185.199.110.153 / 185.199.111.153,
 or CNAME to `nonarkara.github.io`. The `CNAME` file is already in the
-repo; GitHub provisions the certificate once DNS resolves.
+repo; GitHub provisions the certificate once DNS resolves. If the
+domain sits behind a Cloudflare proxy, set it to DNS-only (grey cloud)
+— an orange cloud kept the old hub serving the domain after this repo
+was already live on Pages.
